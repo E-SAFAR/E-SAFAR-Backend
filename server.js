@@ -7,11 +7,15 @@ const cors = require("cors");
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
+
+// Update CORS options to allow requests from your frontend's domain
 const corsOptions = {
+  origin: ["http://localhost:5173", "https://e-safar-frontend.vercel.app"],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+
 // import routes
 const user = require("./Controller/User");
 
