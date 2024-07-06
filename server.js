@@ -9,7 +9,7 @@ require("dotenv").config();
 
 // Update CORS options to allow requests from your frontend's domain
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://e-safar-frontend.vercel.app"], // Add your frontend domain here
+  origin: "http://localhost:5173", // Add your frontend domain here
   credentials: true,
   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
