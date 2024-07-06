@@ -64,19 +64,20 @@ async function createAndStoreToken(newUser, res) {
     sameSite: "none",
   });
 
+  console.log("Sending email to:", newUser.email); // Log the email address
+
   try {
     await sendMail({
-      email: newUser.email,
+      email: newUser.email, // Ensure this is correctly set
       subject: "Activate your account",
       message: `Hello ${newUser.name}, Here is Account Activation OTP : ${token}`,
     });
   } catch (error) {
-    // You might want to handle the error here or propagate it up
     console.error("Error sending email:", error);
   }
 
   console.log("Token stored in cookie.");
-  return token; // You might want to return the token for further use
+  return token;
 }
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000);
