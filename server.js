@@ -11,7 +11,7 @@ app.use(express.json({ limit: "50mb" }));
 
 // CORS configuration
 const corsOptions = {
-  origin: "https://e-safar-frontend.vercel.app/Signin", // Use environment variable or fallback to localhost
+  origin: "https://e-safar-frontend.vercel.app", // Use environment variable or fallback to localhost
   credentials: true,
 };
 
