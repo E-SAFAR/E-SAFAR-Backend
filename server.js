@@ -7,11 +7,8 @@ const cors = require("cors");
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
-const corsOptions = {
-  credentials: true,
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 // import routes
 const user = require("./Controller/User");
 
