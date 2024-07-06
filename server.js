@@ -11,7 +11,7 @@ app.use(express.json({ limit: "50mb" }));
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Use environment variable or fallback to localhost
+  origin: "https://e-safar-frontend.vercel.app/Signin", // Use environment variable or fallback to localhost
   credentials: true,
 };
 
@@ -19,6 +19,8 @@ app.use(cors(corsOptions));
 
 // import routes
 const user = require("./Controller/User");
+
+app.use("/api/v2/user", user); // Ensure routes are defined after CORS middleware
 
 app.use(ErrorHandler);
 const connectDatabase = require("./db/Database");
@@ -43,8 +45,6 @@ connectDatabase();
 const server = app.listen(process.env.PORT, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
-
-app.use("/api/v2/user", user);
 
 // unhandled promise rejection
 process.on("unhandledRejection", (err) => {
