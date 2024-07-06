@@ -5,24 +5,29 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-app.use(cookieParser());
-app.use(express.json({ limit: "50mb" }));
+require("dotenv").config();
 
 // Update CORS options to allow requests from your frontend's domain
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://e-safar-frontend.vercel.app"],
+  origin: ["http://localhost:5173", "https://e-safar-frontend.vercel.app"], // Add your frontend domain here
   credentials: true,
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Preflight requests
+
+app.use(cookieParser());
+app.use(express.json({ limit: "50mb" }));
 
 // import routes
 const user = require("./Controller/User");
 
+app.use("/api/v2/user", user);
+
 app.use(ErrorHandler);
 const connectDatabase = require("./db/Database");
-// const cloudinary = require("cloudinary");
-require("dotenv").config();
+
 // Handling uncaught Exception
 process.on("uncaughtException", (err) => {
   console.log(`Error: ${err.message}`);
@@ -38,18 +43,11 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 
 // connect db
 connectDatabase();
-// cloudinary.config({
-//   cloud_name: 'dw2akyum5',
-//   api_key: '813325225287557',
-//   api_secret: 'Ga8WkWni5X8t1EO-LOunfEHN-1g'
-// });
 
 // create server
 const server = app.listen(process.env.PORT, () => {
   console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
-
-app.use("/api/v2/user", user);
 
 // unhandled promise rejection
 process.on("unhandledRejection", (err) => {
